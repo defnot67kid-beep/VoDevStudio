@@ -157,18 +157,15 @@ class DockManager {
             const raw = localStorage.getItem('vodevs_layout');
             if (raw) {
                 const parsed = JSON.parse(raw);
-                // Only restore if it's complete enough
                 if (typeof parsed === 'object') {
                     this.layout = parsed;
                     return;
                 }
             }
         } catch (e) {}
-        // Default layout will be set when panels register
     }
 
     render() {
-        // Build dock structure
         const left = [], right = [], bottom = [], top = [];
         const floating = [];
         const hidden = [];
@@ -188,13 +185,11 @@ class DockManager {
 
         this.root.innerHTML = '';
 
-        // Build DOM
         const leftEl = this.buildDockColumn(left, 'left');
         const rightEl = this.buildDockColumn(right, 'right');
         const bottomEl = this.buildDockRow(bottom, 'bottom');
         const topEl = this.buildDockRow(top, 'top');
 
-        // Assemble flex layout: top - [left | center | right] - bottom
         const wrapper = document.createElement('div');
         wrapper.style.cssText = 'display:flex;flex-direction:column;flex:1;min-height:0;';
 
@@ -221,10 +216,8 @@ class DockManager {
 
         this.root.appendChild(wrapper);
 
-        // Render floating panels
         floating.forEach(id => this.renderFloating(id));
 
-        // Init viewport (will be picked up by main.js)
         document.dispatchEvent(new CustomEvent('dock-rendered'));
         this.updateViewport();
     }
@@ -245,7 +238,6 @@ class DockManager {
             el.appendChild(panelEl);
             totalSize += size;
         });
-        // Add resize handles
         const children = el.children;
         for (let i = 0; i < children.length - 1; i++) {
             const handle = document.createElement('div');
@@ -277,7 +269,6 @@ class DockManager {
             el.appendChild(panelEl);
             totalSize += size;
         });
-        // Resize handles
         const children = el.children;
         for (let i = 0; i < children.length - 1; i++) {
             const handle = document.createElement('div');
@@ -298,7 +289,6 @@ class DockManager {
         el.className = 'dock-panel';
         el.dataset.panelId = id;
 
-        // Header
         const header = document.createElement('div');
         header.style.cssText = 'flex:0 0 28px;display:flex;align-items:center;background:#383a40;border-bottom:1px solid #4a4d55;padding:0 6px;gap:4px;cursor:grab;user-select:none;';
         header.title = 'Drag to move panel';
@@ -345,7 +335,6 @@ class DockManager {
         header.appendChild(menuBtn);
         header.appendChild(closeBtn);
 
-        // Content
         const content = document.createElement('div');
         content.style.cssText = 'flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0;';
         if (state.minimized) content.style.display = 'none';
@@ -354,7 +343,6 @@ class DockManager {
         el.appendChild(header);
         el.appendChild(content);
 
-        // Drag
         header.addEventListener('mousedown', (e) => {
             if (e.button !== 0) return;
             if (e.target.closest('button')) return;
@@ -420,17 +408,14 @@ class DockManager {
             el.appendChild(header);
             el.appendChild(content);
 
-            // Drag
             header.addEventListener('mousedown', (e) => {
                 if (e.button !== 0) return;
                 if (e.target.closest('button')) return;
                 this.startDrag(id, e.clientX, e.clientY);
             });
 
-            // Resize handles
             this.addResizeHandles(el, id);
 
-            // Bring to front
             el.addEventListener('mousedown', () => {
                 el.style.zIndex = 100 + Date.now() % 1000;
             });
@@ -515,7 +500,6 @@ class DockManager {
             this.dragState.startY = e.clientY;
             this.renderFloating(panelId);
         } else {
-            // Show indicators
             const rect = this.root.getBoundingClientRect();
             const zones = this.indicators.zones;
             Object.keys(zones).forEach(z => {
@@ -539,7 +523,6 @@ class DockManager {
         const rect = this.root.getBoundingClientRect();
         const x = e.clientX, y = e.clientY;
 
-        // Check if dropped on a zone
         let targetZone = null;
         if (x < rect.left + rect.width * 0.3) targetZone = 'left';
         else if (x > rect.left + rect.width * 0.7) targetZone = 'right';
@@ -553,7 +536,6 @@ class DockManager {
         } else if (targetZone === 'center') {
             this.dock(panelId, 'left');
         } else {
-            // Drop as floating
             if (this.layout[panelId].mode === 'docked') {
                 this.undock(panelId);
                 this.layout[panelId].floatingX = x - 100;
@@ -625,7 +607,6 @@ class DockManager {
                 this.render();
             }},
         ];
-        // Use existing context menu
         const menu = document.getElementById('contextMenu');
         menu.innerHTML = '';
         this.buildMenuItems(menu, items);
@@ -649,7 +630,6 @@ class DockManager {
                 li.style.cursor = 'pointer';
                 li.onclick = (e) => {
                     e.stopPropagation();
-                    // Show submenu
                     const sub = document.createElement('ul');
                     sub.className = 'context-menu';
                     sub.style.cssText = 'position:absolute;left:100%;top:0;display:flex;';
@@ -685,7 +665,6 @@ class DockManager {
 // ============================================================
 // MAIN APPLICATION
 // ============================================================
-// Setup Three.js scene
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x1a1b1e);
 
@@ -705,7 +684,6 @@ let initialObject = null;
 const keys = {};
 const VODEVS_KEY = 'vodevs_library';
 
-// DOM refs
 const statusEl = document.getElementById('status');
 const fileNameEl = document.getElementById('fileName');
 
@@ -716,7 +694,6 @@ function initDockSystem() {
     const root = document.getElementById('dockRoot');
     const dock = new DockManager(root);
 
-    // Register panels with content
     const explorerContent = document.createElement('div');
     explorerContent.id = 'explorerContent';
     explorerContent.style.cssText = 'flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;';
@@ -969,7 +946,6 @@ function initThree() {
         orbitControls.enabled = !event.value;
     });
 
-    // Mirror scaling
     transformControls.addEventListener('mouseDown', () => {
         if (transformControls.getMode() === 'scale' && selectedObject) {
             initialObject = selectedObject;
@@ -1001,7 +977,6 @@ function initThree() {
         initialObject = null;
     });
 
-    // Lights
     const ambient = new THREE.AmbientLight(0x404060);
     scene.add(ambient);
     const keyLight = new THREE.DirectionalLight(0xffeedd, 1.2);
@@ -1014,7 +989,6 @@ function initThree() {
     fillLight.position.set(-5, 0, 5);
     scene.add(fillLight);
 
-    // Ground
     const groundGeo = new THREE.PlaneGeometry(30, 30);
     const groundMat = new THREE.ShadowMaterial({ opacity: 0.4 });
     const ground = new THREE.Mesh(groundGeo, groundMat);
@@ -1027,7 +1001,6 @@ function initThree() {
     scene.add(gridHelper);
     window.gridHelper = gridHelper;
 
-    // Viewport resize
     document.addEventListener('viewport-resize', (e) => {
         const { width, height } = e.detail;
         if (width > 0 && height > 0) {
@@ -1156,7 +1129,6 @@ function updateProperties(obj) {
     }
 }
 
-// Bind property inputs
 function bindPropInput(id, applyFn) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -1165,6 +1137,7 @@ function bindPropInput(id, applyFn) {
     });
     el.addEventListener('change', () => { if (selectedObject) updateProperties(selectedObject); });
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     bindPropInput('propPosX', (obj, v) => obj.position.x = v);
     bindPropInput('propPosY', (obj, v) => obj.position.y = v);
@@ -1289,7 +1262,7 @@ function updateExplorer(group) {
 }
 
 // ============================================================
-// WORKSPACE EXTRAS (non-visual instances)
+// WORKSPACE EXTRAS
 // ============================================================
 const INSERTABLE_TYPES = [
     { group: 'Frequently Used', className: 'Part', icon: '📦' },
@@ -1441,7 +1414,7 @@ function buildExtraContextMenuItems(inst) {
 }
 
 // ============================================================
-// TOOLBOX / VODEVS LIBRARY
+// TOOLBOX
 // ============================================================
 function loadVodevsLibrary() {
     try {
@@ -1643,7 +1616,7 @@ function removeFromVodevs(id) {
 }
 
 // ============================================================
-// TOAST NOTIFICATIONS
+// TOAST
 // ============================================================
 function showToast(msg, type = 'info') {
     const toast = document.getElementById('toast');
@@ -2494,7 +2467,6 @@ function renderCommands(filter = '') {
 // UI EVENT BINDING
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
-    // File input
     document.getElementById('fileInput').addEventListener('change', (e) => {
         if (e.target.files[0]) loadModelFile(e.target.files[0]);
     });
@@ -2503,7 +2475,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addPartBtn').addEventListener('click', () => createNewPart('Part'));
     document.getElementById('exportBtn').addEventListener('click', exportSceneToVortexJSON);
 
-    // View toggles
     document.getElementById('viewToggleExplorer').addEventListener('click', () => dock.toggle('explorer'));
     document.getElementById('viewToggleProperties').addEventListener('click', () => dock.toggle('properties'));
     document.getElementById('viewToggleToolbox').addEventListener('click', () => dock.toggle('toolbox'));
@@ -2517,26 +2488,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     document.getElementById('resetLayoutBtn').addEventListener('click', () => dock.resetLayout());
 
-    // Toolbox
     document.getElementById('toolboxBtn').addEventListener('click', () => dock.toggle('toolbox'));
 
-    // Play
     document.getElementById('playBtn').addEventListener('click', () => {
         showToast('Play mode isn\'t available in the web editor', 'warn');
     });
 
-    // Output
     document.getElementById('outputClear')?.addEventListener('click', () => {
         const list = document.getElementById('outputList');
         if (list) list.innerHTML = '';
     });
 
-    // Script editor
     document.getElementById('newScriptBtn')?.addEventListener('click', () => {
         showToast('New script created', 'info');
     });
 
-    // Ribbon tabs
     document.querySelectorAll('.ribbon-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.ribbon-tab').forEach(b => b.classList.remove('active'));
@@ -2548,12 +2514,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Alias buttons
     document.querySelectorAll('[data-alias]').forEach(btn => {
         btn.addEventListener('click', () => document.getElementById(btn.dataset.alias)?.click());
     });
 
-    // Workspace add
     document.getElementById('workspaceAddBtn').addEventListener('click', (e) => {
         e.stopPropagation();
         const rect = e.target.getBoundingClientRect();
@@ -2574,7 +2538,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('insertObjectSearch').addEventListener('input', () => renderInsertMenuList(document.getElementById('insertObjectSearch').value));
 
-    // Toolbox tabs
     document.querySelectorAll('.toolbox-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.toolbox-tab').forEach(b => b.classList.remove('active'));
@@ -2594,13 +2557,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('toolboxSearch').addEventListener('input', () => renderToolbox(document.getElementById('toolboxSearch').value));
     document.getElementById('toolboxDetailBack').addEventListener('click', closeToolboxDetail);
 
-    // Search
     document.getElementById('searchBox').addEventListener('input', () => updateExplorer(currentGroup));
 
-    // Command palette
     document.getElementById('commandSearch').addEventListener('input', () => renderCommands(document.getElementById('commandSearch').value));
 
-    // Close menus on click outside
     document.addEventListener('click', () => {
         hideContextMenu();
         closeInsertMenu();
@@ -2651,7 +2611,6 @@ function animate() {
     orbitControls.update();
     renderer.render(scene, camera);
 
-    // Status bar
     const objCount = currentGroup ? currentGroup.children.length : 0;
     const statObj = document.getElementById('statObjectCount');
     const statSel = document.getElementById('statSelection');
@@ -2724,7 +2683,6 @@ function logOutput(message, type = 'info') {
     list.scrollTop = list.scrollHeight;
 }
 
-// Override console methods
 const origLog = console.log;
 const origWarn = console.warn;
 const origError = console.error;
@@ -2732,7 +2690,6 @@ console.log = (...args) => { origLog(...args); logOutput(args.join(' '), 'info')
 console.warn = (...args) => { origWarn(...args); logOutput(args.join(' '), 'warn'); };
 console.error = (...args) => { origError(...args); logOutput(args.join(' '), 'error'); };
 
-// Start
 statusEl.textContent = 'Ready. Drop rbxlx/rbxmx/XML, glTF, or OBJ.';
 logOutput('Vodevs Studio initialized', 'info');
 animate();

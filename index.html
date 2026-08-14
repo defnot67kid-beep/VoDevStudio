@@ -225,7 +225,14 @@
 </div>
 <div class="toast" id="toast"><span class="icon" id="toastIcon">✅</span><span id="toastMessage"></span></div>
 
-<script type="importmap" src="importmap.json"></script>
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+}
+</script>
 <script type="module" src="script.js"></script>
 </body>
 </html>
