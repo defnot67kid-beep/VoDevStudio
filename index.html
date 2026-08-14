@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vodevs Studio - Web Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+    <!-- ============ RIBBON (TOP) ============ -->
+    <div id="ribbon">
+        <div id="titlebar">
+            <span class="dot"></span>
+            <span class="brand-text">
+                <span class="brand-title">Vodevs Studio</span>
+                <span class="brand-sub">Web Editor</span>
+            </span>
+            <span id="fileName">No file selected</span>
+        </div>
+
+        <div class="ribbon-tabs" id="ribbonTabs">
+            <button class="ribbon-tab active" data-ribbon="home" type="button">Home</button>
+            <button class="ribbon-tab" data-ribbon="model" type="button">Model</button>
+            <button class="ribbon-tab" data-ribbon="test" type="button">Test</button>
+            <button class="ribbon-tab" data-ribbon="view" type="button">View</button>
+            <button class="ribbon-tab" data-ribbon="plugins" type="button">Plugins</button>
+        </div>
+
+        <div class="ribbon-body">
+            <!-- HOME -->
+            <div class="ribbon-page active" data-ribbon-page="home">
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <label class="ribbon-btn-large" for="fileInput" title="Import a model file">
+                            <span class="ribbon-icon">📁</span>
+                            <span class="ribbon-label">Import</span>
+                        </label>
+                        <input type="file" id="fileInput" accept=".xml,.rbxlx,.rbxmx,.rbxl,.rbxm,.gltf,.glb,.obj">
+                        <button class="ribbon-btn-large" id="exportBtn" type="button">
+                            <span class="ribbon-icon">📦</span>
+                            <span class="ribbon-label">Export</span>
+                        </button>
+                        <button class="ribbon-btn-large" id="clearBtn" type="button">
+                            <span class="ribbon-icon">🗑️</span>
+                            <span class="ribbon-label">Clear</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">File</span>
+                </div>
+                <div class="ribbon-sep"></div>
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large" id="addPartBtn" type="button">
+                            <span class="ribbon-icon">🧱</span>
+                            <span class="ribbon-label">Part</span>
+                        </button>
+                        <button class="ribbon-btn-large ribbon-toggle active" id="toolboxBtn" type="button">
+                            <span class="ribbon-icon">🧰</span>
+                            <span class="ribbon-label">Toolbox</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Insert</span>
+                </div>
+                <div class="ribbon-sep"></div>
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <label class="ribbon-slices" for="wedgeSteps" title="Higher = smoother ramp, more Parts.">
+                            🪜 Slices
+                            <input type="number" id="wedgeSteps" min="2" max="16" value="6">
+                        </label>
+                    </div>
+                    <span class="ribbon-group-title">Options</span>
+                </div>
+            </div>
+
+            <!-- MODEL -->
+            <div class="ribbon-page" data-ribbon-page="model">
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large" data-alias="addPartBtn" type="button">
+                            <span class="ribbon-icon">🧱</span>
+                            <span class="ribbon-label">Part</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">🔗</span>
+                            <span class="ribbon-label">Union</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">📐</span>
+                            <span class="ribbon-label">Negate</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Solid Modeling</span>
+                </div>
+                <div class="ribbon-sep"></div>
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">🗂️</span>
+                            <span class="ribbon-label">Group</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">📤</span>
+                            <span class="ribbon-label">Ungroup</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Grouping</span>
+                </div>
+            </div>
+
+            <!-- TEST -->
+            <div class="ribbon-page" data-ribbon-page="test">
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large ribbon-btn-play" id="playBtn" type="button">
+                            <span class="ribbon-icon">▶️</span>
+                            <span class="ribbon-label">Play</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">👤</span>
+                            <span class="ribbon-label">Play Here</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">⏸️</span>
+                            <span class="ribbon-label">Pause</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Play</span>
+                </div>
+            </div>
+
+            <!-- VIEW -->
+            <div class="ribbon-page" data-ribbon-page="view">
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large ribbon-toggle active" id="viewToggleExplorer" type="button">
+                            <span class="ribbon-icon">🗂️</span>
+                            <span class="ribbon-label">Explorer</span>
+                        </button>
+                        <button class="ribbon-btn-large ribbon-toggle active" id="viewToggleProperties" type="button">
+                            <span class="ribbon-icon">📋</span>
+                            <span class="ribbon-label">Properties</span>
+                        </button>
+                        <button class="ribbon-btn-large ribbon-toggle active" id="viewToggleToolbox" type="button">
+                            <span class="ribbon-icon">🧰</span>
+                            <span class="ribbon-label">Toolbox</span>
+                        </button>
+                        <button class="ribbon-btn-large ribbon-toggle active" id="viewToggleOutput" type="button">
+                            <span class="ribbon-icon">📟</span>
+                            <span class="ribbon-label">Output</span>
+                        </button>
+                        <button class="ribbon-btn-large ribbon-toggle" id="viewToggleScriptEditor" type="button">
+                            <span class="ribbon-icon">📜</span>
+                            <span class="ribbon-label">Script Editor</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Panels</span>
+                </div>
+                <div class="ribbon-sep"></div>
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large ribbon-toggle active" id="viewToggleGrid" type="button">
+                            <span class="ribbon-icon">▦</span>
+                            <span class="ribbon-label">Grid</span>
+                        </button>
+                        <button class="ribbon-btn-large" id="resetLayoutBtn" type="button">
+                            <span class="ribbon-icon">🔄</span>
+                            <span class="ribbon-label">Reset Layout</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Viewport</span>
+                </div>
+            </div>
+
+            <!-- PLUGINS -->
+            <div class="ribbon-page" data-ribbon-page="plugins">
+                <div class="ribbon-group">
+                    <div class="ribbon-group-row">
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">🧩</span>
+                            <span class="ribbon-label">Manage</span>
+                        </button>
+                        <button class="ribbon-btn-large" disabled title="Not available" type="button">
+                            <span class="ribbon-icon">🏪</span>
+                            <span class="ribbon-label">Plugins Market</span>
+                        </button>
+                    </div>
+                    <span class="ribbon-group-title">Plugins</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ WORKSPACE ============ -->
+    <div id="workspace">
+        <!-- Docking system root -->
+        <div id="dockRoot" style="display:flex;flex:1;min-height:0;position:relative;"></div>
+    </div>
+
+    <!-- ============ STATUS BAR ============ -->
+    <div id="statusbar">
+        <span class="statusbar-icon">✨</span>
+        <span id="status">Ready. Drop rbxlx/rbxmx/XML, glTF, or OBJ.</span>
+        <span class="statusbar-spacer"></span>
+        <span id="statObjectCount" class="statusbar-stat">0 objects</span>
+        <span class="statusbar-sep"></span>
+        <span id="statSelection" class="statusbar-stat">No selection</span>
+        <span class="statusbar-sep"></span>
+        <span id="statCamPos" class="statusbar-stat">Cam: 0.0, 0.0, 0.0</span>
+    </div>
+
+</div>
+
+<!-- Floating menus -->
+<div id="insertObjectMenu" class="floating-menu">
+    <input type="text" id="insertObjectSearch" placeholder="Search object">
+    <div class="floating-menu-list" id="insertObjectList"></div>
+</div>
+<ul id="contextMenu" class="context-menu"></ul>
+<div id="commandPalette" class="floating-menu" style="width:320px;max-height:400px;display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:200;">
+    <input type="text" id="commandSearch" placeholder="Search commands...">
+    <div class="floating-menu-list" id="commandList"></div>
+</div>
+<div class="toast" id="toast"><span class="icon" id="toastIcon">✅</span><span id="toastMessage"></span></div>
+
+<script type="importmap" src="importmap.json"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
