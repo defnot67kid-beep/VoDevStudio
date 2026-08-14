@@ -1,0 +1,4 @@
+{
+  "note": "Actual per-user recent-assets history is tracked at runtime in localStorage (key: vortex_recent_assets). This file is a placeholder/starter list only.",
+  "assets": []
+}

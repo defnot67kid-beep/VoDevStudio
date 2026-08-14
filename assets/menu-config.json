@@ -1,0 +1,7 @@
+{
+  "Background": ["NewFolder", "InsertObject", "Paste", "---", "SaveToVoDevStudio"],
+  "Part": ["Cut", "Copy", "Duplicate", "Delete", "Rename", "Group", "InsertObject", "---", "SaveToVoDevStudio", "Export"],
+  "Model": ["Cut", "Copy", "Duplicate", "Delete", "Rename", "Ungroup", "---", "SaveToVoDevStudio", "Export"],
+  "Folder": ["Rename", "Duplicate", "Delete", "InsertObject"],
+  "ToolboxAsset": ["Insert", "Favorite", "MoveCategory", "Duplicate", "Export", "Delete", "---", "UploadToVoDevMarketplace"]
+}

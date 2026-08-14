@@ -1,0 +1,42 @@
+{
+  "categories": [
+    { "name": "Models", "assets": [
+      { "id": "m_house", "name": "Simple House", "thumbnail": "🏠", "file": null, "author": "Vodevs", "category": "Models", "description": "Basic single-room house shell." },
+      { "id": "m_tree", "name": "Low Poly Tree", "thumbnail": "🌳", "file": null, "author": "BuildPro", "category": "Models", "description": "Stylized low-poly tree." }
+    ]},
+    { "name": "Meshes", "assets": [
+      { "id": "me_rock", "name": "Rock Cluster", "thumbnail": "🪨", "file": null, "author": "Vodevs", "category": "Meshes", "description": "A cluster of rocks." }
+    ]},
+    { "name": "Parts", "assets": [
+      { "id": "p_cube", "name": "Basic Cube", "thumbnail": "📦", "file": null, "author": "Vodevs", "category": "Parts", "description": "A single anchored part." },
+      { "id": "p_ramp", "name": "Ramp", "thumbnail": "🪜", "file": null, "author": "Vodevs", "category": "Parts", "description": "Simple ramp block." }
+    ]},
+    { "name": "Vehicles", "assets": [
+      { "id": "v_car", "name": "Sports Car", "thumbnail": "🚗", "file": "sportscar.vortex", "author": "BVP", "category": "Vehicles", "description": "Player vehicle placeholder." }
+    ]},
+    { "name": "Buildings", "assets": [
+      { "id": "b_tower", "name": "Modern Tower", "thumbnail": "🏢", "file": null, "author": "DevMaster", "category": "Buildings", "description": "Tall modern building block." }
+    ]},
+    { "name": "Scripts", "assets": [
+      { "id": "s_spin", "name": "SpinPart Script", "thumbnail": "📜", "file": null, "author": "Vodevs", "category": "Scripts", "description": "Rotates a part continuously." }
+    ]},
+    { "name": "Textures", "assets": [
+      { "id": "t_brick", "name": "Brick Texture", "thumbnail": "🧱", "file": null, "author": "Vodevs", "category": "Textures", "description": "Tileable brick material." }
+    ]},
+    { "name": "Sounds", "assets": [
+      { "id": "so_ambient", "name": "Ambient Wind", "thumbnail": "🔊", "file": null, "author": "Vodevs", "category": "Sounds", "description": "Looping ambient wind sound." }
+    ]},
+    { "name": "Decals", "assets": [
+      { "id": "d_logo", "name": "Vortex Logo Decal", "thumbnail": "🖼️", "file": null, "author": "Vodevs", "category": "Decals", "description": "Vortex logo image decal." }
+    ]},
+    { "name": "UI", "assets": [
+      { "id": "ui_button", "name": "Rounded Button", "thumbnail": "🔘", "file": null, "author": "Vodevs", "category": "UI", "description": "Reusable rounded UI button." }
+    ]},
+    { "name": "Templates", "assets": [
+      { "id": "tp_obby", "name": "Obby Starter Kit", "thumbnail": "🧩", "file": null, "author": "Vodevs", "category": "Templates", "description": "Obstacle course starter pieces." }
+    ]},
+    { "name": "Vodevs Assets", "assets": [
+      { "id": "va_pack", "name": "Vodevs Starter Pack", "thumbnail": "✨", "file": null, "author": "Vodevs", "category": "Vodevs Assets", "description": "Curated official Vodevs asset pack." }
+    ]}
+  ]
+}

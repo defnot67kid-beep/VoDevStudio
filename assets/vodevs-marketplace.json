@@ -1,0 +1,8 @@
+{
+  "categories": [
+    { "name": "Featured", "assets": [
+      { "id": "mp_castle", "name": "Medieval Castle", "thumbnail": "🏰", "file": null, "author": "VodevsHQ", "category": "Featured", "description": "Full castle build, marketplace exclusive." },
+      { "id": "mp_spaceship", "name": "Spaceship Bridge", "thumbnail": "🚀", "file": null, "author": "DevMaster", "category": "Featured", "description": "Sci-fi bridge interior." }
+    ]}
+  ]
+}
